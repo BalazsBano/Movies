@@ -5,21 +5,9 @@ export async function searchMovies(title){
     body: JSON.stringify({
       query: `query SearchMovies {
         searchMovies(query: "${title}") {
-          id
           name
-          overview
-          releaseDate
-          cast {
-            id
-            person {
-              name
-            }
-            role {
-              ... on Cast {
-                character
-              }
-            }
-          }
+          genres {name}
+          score
         }
       }`,
     }),
