@@ -6,6 +6,14 @@
   align-content: center;
   align-items: center
 }
+.loader-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center
+}
 
 #inputfield {
   margin-bottom: 20px;
