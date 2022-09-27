@@ -13,6 +13,6 @@ export async function searchMovies(title){
     }),
   })
   .then((response) => response.json())
-  .then((data) => console.log(data));
+  .then((data) => (data));
   return response;
 }
