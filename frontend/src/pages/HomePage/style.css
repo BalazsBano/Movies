@@ -1,0 +1,12 @@
+.finder-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center
+}
+
+#input {
+  margin-bottom: 20px;
+}
