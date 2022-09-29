@@ -13,6 +13,23 @@ export function HomePage(){
     moviesData.push(item)
   })
 
+  function renderingCategories(index){
+    var categories = "";
+    if(moviesData[index].genres?.length > 0){
+      for (let i = 0; i < moviesData[index].genres?.length; i++) {
+        if(i !== 0){
+          categories = categories + ", " + moviesData[index].genres[i].name
+        } else {
+          categories = categories + moviesData[index].genres[i].name
+        }
+        console.log("categories", categories)
+      }
+    } else {
+      categories = "No categories"
+    }
+    return categories
+  }
+
   var handleKeyDown = function(e){
     if(e.key === "Enter"){
       handleSubmit(e);
@@ -55,7 +72,9 @@ export function HomePage(){
             return (
               <div key={index} className="movies-list-item">
                 <a href="" className="movie-title">{item.name}</a>
-                <p className="movie-category">{item.genres.name}</p>
+
+                <p className="movie-category">{renderingCategories(index)}</p>
+                {/* <p className="movie-category">{item.genres.name}</p> */}
                 <p className="movie-score">Score: {item.score}</p>
               </div>
             )
