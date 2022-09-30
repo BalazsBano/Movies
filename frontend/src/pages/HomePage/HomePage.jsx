@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { searchMovies } from "../../api/searchMovies";
+import { Button, Form, Card, OverlayTrigger, Popover, Modal } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./style.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function HomePage(){
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [listOfMovies, setListOfMovies] = useState();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const moviesData = [];
   listOfMovies?.map((item) => {
@@ -16,18 +21,22 @@ export function HomePage(){
   function renderingCategories(index){
     var categories = "";
     if(moviesData[index].genres?.length > 0){
-      for (let i = 0; i < moviesData[index].genres?.length; i++) {
+      for (let i = 0; i < moviesData[index].genres.length; i++) {
         if(i !== 0){
-          categories = categories + ", " + moviesData[index].genres[i].name
+          categories = categories + ", " + moviesData[index].genres[i].name;
         } else {
-          categories = categories + moviesData[index].genres[i].name
+          categories = categories + moviesData[index].genres[i].name;
         }
-        console.log("categories", categories)
       }
     } else {
-      categories = "No categories"
+      categories = "No categories";
     }
-    return categories
+    return categories;
+  }
+
+  const clickOnTitle = () => {
+    setShow(true)
+    // alert("test")
   }
 
   var handleKeyDown = function(e){
@@ -61,25 +70,38 @@ export function HomePage(){
         </div>
         :
         <div className="finder-container">
-          <form className="finder-form">
-            <h2>Movie finder</h2>
-            <input type="text" id="inputfield" placeholder="Movie title" autoFocus onChange={(e) => setTitle(e.target.value)} onKeyDown={(e) => handleKeyDown(e)}/>
-            <button type="submit" id="searchButton" onClick={(e) => validatingForm(e)}>Search</button>
-          </form>
+          <Card className="formCard">
+            <Card.Header>Movie finder</Card.Header>
+            <Card.Body>
+              <Form className="finder-form">
+                <Form.Control className="inputfield" as="input" type="text" placeholder="Movie title" value={title} required autoFocus  onChange={(e) => setTitle(e.target.value)} />
+                <Button type="submit" id="searchButton" onClick={(e) => validatingForm(e)}>Search</Button>
+              </Form>
+            </Card.Body>
+          </Card>
 
           {
           moviesData.map((item, index) => {
             return (
               <div key={index} className="movies-list-item">
-                <a href="" className="movie-title">{item.name}</a>
-
+                <a href="#" onClick={handleShow} className="movie-title">{item.name}</a>
                 <p className="movie-category">{renderingCategories(index)}</p>
-                {/* <p className="movie-category">{item.genres.name}</p> */}
                 <p className="movie-score">Score: {item.score}</p>
               </div>
             )
           })
           }
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+            <Modal.Title>Title</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       }
     </div>
