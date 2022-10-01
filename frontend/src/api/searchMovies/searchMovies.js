@@ -5,6 +5,7 @@ export async function searchMovies(title){
     body: JSON.stringify({
       query: `query SearchMovies {
         searchMovies(query: "${title}") {
+          id
           name
           genres {name}
           score
